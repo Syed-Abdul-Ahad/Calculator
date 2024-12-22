@@ -1,23 +1,44 @@
 import Display from './Components/Display'
 import ButtonContainer from './Components/ButtonContainer'
 import styles from './App.module.css'
+import { useState } from 'react'
 
 
 function App() {
-  let container1 = ['C','1','2','3']
-  let container2 = ['+','4','5','6']
-  let container3 = ['-','7','8','9']
-  let container4 = ['*','.','0','00']
-  let container5 = ['/','*','%','AC']
+
+  const Array = [
+    'C', '1', '2', '3', 
+    '+', '4', '5', '6', 
+    '-', '7', '8', '9', 
+    '*', '.', '0', '00', 
+    '/', '=', '%', 'AC'
+  ];
+
+  const [calVal,setCalVal] = useState("");
+
+  const onButtonClick = (value)=>{
+    let newVal = value;
+
+    if(newVal == 'C'){
+      setCalVal((prev)=>prev.slice(0,-1))
+    }
+    else if(newVal == 'AC'){
+      setCalVal("")
+    }
+    else if(newVal == '='){
+      let result = eval(calVal)
+      setCalVal(result)
+    }
+    else{
+      setCalVal([...calVal,newVal].join(''))
+    }
+  }
+
   return (
     <>
     <div className={styles.calculator}>
-      <Display/>
-      <ButtonContainer container={container1}/>
-      <ButtonContainer container={container2}/>
-      <ButtonContainer container={container3}/>
-      <ButtonContainer container={container4}/>
-      <ButtonContainer container={container5}/>
+      <Display displayVal={calVal}/>
+      <ButtonContainer container={Array} onButtonClick={onButtonClick}/>
     </div>
 
     </>

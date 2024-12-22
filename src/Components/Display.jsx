@@ -1,7 +1,7 @@
 import styles from './Display.module.css'
 
-const Display = ()=>{
-    return <input className={styles.input} type="text" placeholder='Enter number here'/>
+const Display = ({displayVal})=>{
+    return <input value={displayVal} className={styles.input} type="text" placeholder='Enter number here' readOnly/>
 }
 
 export default Display;
